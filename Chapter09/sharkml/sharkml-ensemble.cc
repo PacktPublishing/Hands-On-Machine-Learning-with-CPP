@@ -1,5 +1,5 @@
-// https://www.dataquest.io/blog/introduction-to-ensembles/
 // https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Diagnostic)
+// download the wdbc.data file
 
 #include <plot.h>
 
@@ -19,6 +19,7 @@
 #include <experimental/filesystem>
 #include <iostream>
 #include <unordered_map>
+#include <regex>
 
 namespace fs = std::experimental::filesystem;
 
@@ -198,10 +199,45 @@ void StackingEnsemble(const ClassificationDataset& train,
   std::cout << "Stacking ensemble accuracy = " << accuracy << std::endl;
 }
 
+std::string PrepareDataset(const std::string& dataset_name) {
+    auto new_dataset_name = dataset_name + ".csv"; 
+    if (fs::exists(dataset_name)) {
+        std::ifstream file(dataset_name);
+        std::ofstream out_file(new_dataset_name);
+        std::string line;
+        while(std::getline(file, line)) {
+            std::regex re("[\\s,]+");
+            std::sregex_token_iterator it(line.begin(), line.end(), re, -1);
+            std::sregex_token_iterator reg_end;
+            std::vector<std::string> tokens;
+            for (int i = 0; it != reg_end; ++it, ++i) {
+                if (i == 0) { //skip
+                    continue;
+                } else if (i == 1) {
+                    if (it->str() == "M")
+                        tokens.push_back("0");
+                    else
+                        tokens.push_back("1");
+                } else {
+                    tokens.push_back(it->str());
+                }
+                tokens.push_back(", ");
+            }
+            tokens.resize(tokens.size() - 1);
+            for (auto& token : tokens) {
+                out_file << token;
+            }
+            out_file << "\n";
+        }
+    }
+    return new_dataset_name;
+}
+
 int main(int argc, char** argv) {
   if (argc > 1) {
     auto dataset_name = fs::path(argv[1]);
     if (fs::exists(dataset_name)) {
+      dataset_name = PrepareDataset(dataset_name);
       ClassificationDataset data;
       importCSV(data, dataset_name, LabelPosition::FIRST_COLUMN);
 
@@ -229,3 +265,4 @@ int main(int argc, char** argv) {
   std::cerr << "Dataset file is missed or incorrect \n";
   return 0;
 }
+
