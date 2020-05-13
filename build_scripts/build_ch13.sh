@@ -18,3 +18,4 @@ cp $ANDROID_PYTORCH_DIR/lib/libtorch.so app/src/main/jniLibs/armeabi-v7a/
 ./gradlew build
 
 # Find resulting APK file in the ch13/android_classify/app/build/outputs/apk/release/ folder
+# Notice that this script may fail if you run it into Docker container under Windows platform
