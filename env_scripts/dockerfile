@@ -1,0 +1,52 @@
+FROM ubuntu:18.04
+MAINTAINER Kirill rotate@ukr.net
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get -y update
+RUN apt-get -y upgrade
+RUN apt-get install -y unzip
+
+RUN mkdir development
+ADD checkout_lib.sh /development
+RUN chmod 777 /development/checkout_lib.sh
+ADD install_lib.sh /development
+RUN chmod 777 /development/install_lib.sh
+ADD install_env.sh /development
+RUN chmod 777 /development/install_env.sh
+ADD install_android.sh /development
+RUN chmod 777 /development/install_android.sh
+
+
+RUN apt-get install -y build-essential
+RUN apt-get install -y gdb
+RUN apt-get install -y git
+RUN apt-get install -y cmake
+RUN apt-get install -y cmake-curses-gui
+RUN apt-get install -y python
+RUN apt-get install -y python-pip
+RUN apt-get install -y libblas-dev
+RUN apt-get install -y libopenblas-dev
+RUN apt-get install -y libatlas-base-dev
+RUN apt-get install -y liblapack-dev
+RUN apt-get install -y libboost-all-dev
+RUN apt-get install -y libopencv-core3.2
+RUN apt-get install -y libopencv-imgproc3.2
+RUN apt-get install -q -y libopencv-dev
+RUN apt-get install -y libopencv-highgui3.2
+RUN apt-get install -y libopencv-highgui-dev
+RUN apt-get install -y libhdf5-dev
+RUN apt-get install -y libjson-c-dev
+RUN apt-get install -y libx11-dev
+RUN apt-get install -y openjdk-8-jdk
+RUN apt-get install -y wget
+RUN apt-get install -y ninja-build
+RUN apt-get install -y gnuplot
+RUN apt-get install -y vim
+RUN apt-get install -y python3-venv
+
+RUN pip install pyyaml
+RUN pip install typing
+
+
+
