@@ -78,7 +78,7 @@
    ```
    git clone https://github.com/yhirose/cpp-httplib third-party/httplib
    ```
-10.  Clone the PyTorch third-party library:
+10. Clone the PyTorch third-party library:
     ```
     cd third-party
     wget --no-check-certificate https://download.pytorch.org/libtorch/cu100/libtorch-shared-with-deps-1.2.0.zip
