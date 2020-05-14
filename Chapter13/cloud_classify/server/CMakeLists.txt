@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 find_package(Torch REQUIRED)
 find_package(OpenCV REQUIRED)
 
+include_directories("third-party/")
 include_directories(${CMAKE_PREFIX_PATH}/include)
 include_directories(${ONNX_INCLUDE_DIRS})
 include_directories(${OpenCV_INCLUDE_DIRS})
