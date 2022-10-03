@@ -12,9 +12,14 @@ cd $START_DIR/libs/sources
 git clone $REPOSITORY
 cd "$(basename "$REPOSITORY" .git)"
 git checkout $COMMIT_HASH
+
+if [ -f ".gitmodules" ];then
+sed -i 's/git:\/\//https:\/\//g' ".gitmodules"
+fi
+
 git submodule update --init --recursive
 mkdir build
-cd build 
+cd build
 cmake -DCMAKE_INSTALL_PREFIX=$START_DIR/libs $EXTRA_CMAKE_PARAMS ..
 cmake --build . --target install -- -j8
 cd ..

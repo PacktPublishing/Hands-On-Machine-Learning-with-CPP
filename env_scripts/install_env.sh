@@ -17,7 +17,7 @@ mkdir libs/sources
 . ./install_lib.sh https://github.com/davisking/dlib 929c630b381d444bbf5d7aa622e3decc7785ddb2
 
 # Armadillo
-. ./install_lib.sh https://gitlab.com/conradsnicta/armadillo-code 442d52ba052115b32035a6e7dc6587bb6a462dec 
+. ./install_lib.sh https://gitlab.com/conradsnicta/armadillo-code 48b45db6ca1d2839e42332dcdf04f55dcec83e20
 
 # xtl
 . ./install_lib.sh https://github.com/xtensor-stack/xtl 03a6827c9e402736506f3ded754e890b3ea28a98
@@ -31,10 +31,10 @@ mkdir libs/sources
 # RapidJson
 . ./install_lib.sh https://github.com/Tencent/rapidjson 73063f5002612c6bf64fe24f851cd5cc0d83eef9
 
-# mlpack 
+# mlpack
 . ./install_lib.sh https://github.com/mlpack/mlpack e2f696cfd5b7ccda2d3af1c7c728483ea6591718 -DBUILD_PYTHON_BINDINGS=OFF -DBUILD_TESTS=OFF -DDOWNLOAD_ENSMALLEN=ON
 
-# Eigen 
+# Eigen
 . ./install_lib.sh https://github.com/eigenteam/eigen-git-mirror cf794d3b741a6278df169e58461f8529f43bce5d
 
 # PyTorch
@@ -52,10 +52,11 @@ mkdir libs/sources
 # PlotCpp
 . ./checkout_lib.sh https://github.com/Kolkir/plotcpp c86bd4f5d9029986f0d5f368450d79f0dd32c7e4
 
-# fast-cpp-csv-parser 
+# fast-cpp-csv-parser
 . ./checkout_lib.sh https://github.com/ben-strasser/fast-cpp-csv-parser 3b439a664090681931c6ace78dcedac6d3a3907e
 
 
 
 # return back
 cd $DEV_DIR
+

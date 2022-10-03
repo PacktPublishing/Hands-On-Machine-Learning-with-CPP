@@ -4,25 +4,25 @@ START_DIR=${PWD%/*}
 LIBS_DIR=/development/libs
 
 #Chapter 10
-cd $START_DIR/ch10/dlib
+cd $START_DIR/Chapter10/dlib
 mkdir build
 cd build/
 cmake -DDLIB_PATH=$LIBS_DIR ..
 cmake --build . --target all
 
-cd $START_DIR/ch10/sharkml
+cd $START_DIR/Chapter10/sharkml
 mkdir build
 cd build/
 cmake -DSHARK_PATH=$LIBS_DIR ..
 cmake --build . --target all
 
-cd $START_DIR/ch10/shogun
+cd $START_DIR/Chapter10/shogun
 mkdir build
 cd build/
 cmake -DSHOGUN_PATH=$LIBS_DIR ..
 cmake --build . --target all
 
-cd $START_DIR/ch10/pytorch
+cd $START_DIR/Chapter10/pytorch
 mkdir build
 cd build/
 cmake -DCMAKE_INSTALL_PREFIX=$LIBS_DIR ..
