@@ -6,16 +6,13 @@ from PIL import Image
 from torchvision import transforms
 
 # Download pretrained model
-model = torch.hub.load('pytorch/vision', 'resnet18', pretrained=True)
+model = torch.hub.load('pytorch/vision:v0.10.0', 'resnet18', pretrained=True)
 model.eval()
 
 # Download an example image from the pytorch website
-url, filename = ("https://github.com/pytorch/hub/raw/master/dog.jpg", "dog.jpg")
+url, filename = ("https://raw.githubusercontent.com/pytorch/hub/master/images/dog.jpg", "dog.jpg")
 
-try:
-    urllib.URLopener().retrieve(url, filename)
-except:
-    urllib.request.urlretrieve(url, filename)
+urllib.request.urlretrieve(url, filename)
 
 # sample execution
 input_image = Image.open(filename)

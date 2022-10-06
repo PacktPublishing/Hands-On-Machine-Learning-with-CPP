@@ -4,19 +4,19 @@ START_DIR=${PWD%/*}
 LIBS_DIR=/development/libs
 
 #Chapter 7
-cd $START_DIR/ch7/dlib
+cd $START_DIR/Chapter07/dlib
 mkdir build
 cd build/
 cmake -DDLIB_PATH=$LIBS_DIR -DPLOTCPP_PATH=$LIBS_DIR/sources/plotcpp/ ..
 cmake --build . --target all
 
-cd $START_DIR/ch7/sharkml
+cd $START_DIR/Chapter07/sharkml
 mkdir build
 cd build/
 cmake -DSHARK_PATH=$LIBS_DIR -DPLOTCPP_PATH=$LIBS_DIR/sources/plotcpp/ ..
 cmake --build . --target all
 
-cd $START_DIR/ch7/shogun
+cd $START_DIR/Chapter07/shogun
 mkdir build
 cd build/
 cmake -DSHOGUN_PATH=$LIBS_DIR -DPLOTCPP_PATH=$LIBS_DIR/sources/plotcpp/ ..

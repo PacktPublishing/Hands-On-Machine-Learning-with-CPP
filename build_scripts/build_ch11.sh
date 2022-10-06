@@ -4,7 +4,7 @@ START_DIR=${PWD%/*}
 LIBS_DIR=/development/libs
 
 #Chapter 11
-cd $START_DIR/ch11/pytorch
+cd $START_DIR/Chapter11/pytorch
 mkdir build
 cd build/
 cmake -DCMAKE_INSTALL_PREFIX=$LIBS_DIR ..

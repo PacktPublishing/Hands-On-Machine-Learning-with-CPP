@@ -6,8 +6,7 @@ wget https://raw.githubusercontent.com/onnx/models/master/vision/classification/
 python3.6 -m venv venv
 source venv/bin/activate
 pip install numpy
-pip install torch==1.2.0
 pip install pillow
-pip install torchvision==0.4.0
+pip install torchvision==0.10.0
 python model_export.py
 deactivate
