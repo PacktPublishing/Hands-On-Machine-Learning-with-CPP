@@ -11,13 +11,13 @@ std::vector<torch::Tensor> PackedLSTMImpl::flat_weights() const {
   std::vector<torch::Tensor> flat;
 
   const auto num_directions = rnn_->options.bidirectional() ? 2 : 1;
-  for (int64_t layer = 0; layer < rnn_->options.num_layers_; layer++) {
+  for (int64_t layer = 0; layer < rnn_->options.num_layers(); layer++) {
     for (auto direction = 0; direction < num_directions; direction++) {
       const auto layer_idx =
           static_cast<size_t>((layer * num_directions) + direction);
       flat.push_back(rnn_->w_ih[layer_idx]);
       flat.push_back(rnn_->w_hh[layer_idx]);
-      if (rnn_->options.with_bias_) {
+      if (rnn_->options.bias()) {
         flat.push_back(rnn_->b_ih[layer_idx]);
         flat.push_back(rnn_->b_hh[layer_idx]);
       }
@@ -34,14 +34,14 @@ std::tuple<torch::Tensor, torch::Tensor> PackedLSTMImpl::forward(const torch::Te
     // const auto batch_size = input.size(rnn_->options.batch_first_ ? 0 : 1);
     const auto max_batch_size = lengths[0].item().toLong();
     const auto num_directions = rnn_->options.bidirectional() ? 2 : 1;
-    state = torch::zeros({2, rnn_->options.num_layers_ * num_directions,
-                          max_batch_size, rnn_->options.hidden_size_},
+    state = torch::zeros({2, rnn_->options.num_layers() * num_directions,
+                          max_batch_size, rnn_->options.hidden_size()},
                          input.options());
   }
   torch::Tensor output, hidden_state, cell_state;
   std::tie(output, hidden_state, cell_state) = torch::lstm(
       input, lengths, {state[0], state[1]}, flat_weights(),
-      rnn_->options.with_bias_, rnn_->options.num_layers_, rnn_->options.dropout_,
+      rnn_->options.bias(), rnn_->options.num_layers(), rnn_->options.dropout(),
       rnn_->is_training(), rnn_->options.bidirectional());
   return {output, torch::stack({hidden_state, cell_state})};
 }
