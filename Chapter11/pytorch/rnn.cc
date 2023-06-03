@@ -11,7 +11,7 @@ std::vector<torch::Tensor> PackedLSTMImpl::flat_weights() const {
   std::vector<torch::Tensor> flat;
 
   const auto num_directions = rnn_->options.bidirectional_ ? 2 : 1;
-  for (int64_t layer = 0; layer < rnn_->options.layers_; layer++) {
+  for (int64_t layer = 0; layer < rnn_->options.num_layers_; layer++) {
     for (auto direction = 0; direction < num_directions; direction++) {
       const auto layer_idx =
           static_cast<size_t>((layer * num_directions) + direction);
@@ -34,14 +34,14 @@ std::tuple<torch::Tensor, torch::Tensor> PackedLSTMImpl::forward(const torch::Te
     // const auto batch_size = input.size(rnn_->options.batch_first_ ? 0 : 1);
     const auto max_batch_size = lengths[0].item().toLong();
     const auto num_directions = rnn_->options.bidirectional_ ? 2 : 1;
-    state = torch::zeros({2, rnn_->options.layers_ * num_directions,
+    state = torch::zeros({2, rnn_->options.num_layers_ * num_directions,
                           max_batch_size, rnn_->options.hidden_size_},
                          input.options());
   }
   torch::Tensor output, hidden_state, cell_state;
   std::tie(output, hidden_state, cell_state) = torch::lstm(
       input, lengths, {state[0], state[1]}, flat_weights(),
-      rnn_->options.with_bias_, rnn_->options.layers_, rnn_->options.dropout_,
+      rnn_->options.with_bias_, rnn_->options.num_layers_, rnn_->options.dropout_,
       rnn_->is_training(), rnn_->options.bidirectional_);
   return {output, torch::stack({hidden_state, cell_state})};
 }
@@ -63,7 +63,7 @@ SentimentRNNImpl::SentimentRNNImpl(int64_t vocab_size,
       "embeddings_weights", torch::empty({vocab_size, embedding_dim}));
 
   rnn_ = PackedLSTM(torch::nn::LSTMOptions(embedding_dim, hidden_dim)
-                        .layers(n_layers)
+                        .num_layers(n_layers)
                         .bidirectional(bidirectional)
                         .dropout(dropout));
   register_module("rnn", rnn_);
@@ -102,7 +102,7 @@ torch::Tensor SentimentRNNImpl::forward(const at::Tensor& text,
   hidden_state.squeeze_(0);  // remove 0 dimension equals to 1 after narrowing
 
   // take last hidden layers state
-  auto last_index = rnn_->options().layers() - 2;
+  auto last_index = rnn_->options().num_layers() - 2;
   hidden_state = at::cat({hidden_state.narrow(0, last_index, 1).squeeze(0),
                           hidden_state.narrow(0, last_index + 1, 1).squeeze(0)},
                          /*dim*/ 1);
