@@ -1,3 +1,7 @@
+/*
+PR introduced breaking changes: https://github.com/pytorch/pytorch/pull/34322
+*/
+
 #ifndef LENET5_H
 #define LENET5_H
 
@@ -9,7 +13,7 @@ class PackedLSTMImpl : public torch::nn::Module {
 
   std::vector<torch::Tensor> flat_weights() const;
 
-  torch::nn::RNNOutput forward(const torch::Tensor& input,
+  std::tuple<torch::Tensor, torch::Tensor> forward(const torch::Tensor& input,
                                const torch::Tensor& lengths,
                                torch::Tensor state = {});
 

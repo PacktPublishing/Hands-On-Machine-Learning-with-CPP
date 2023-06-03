@@ -26,7 +26,7 @@ std::vector<torch::Tensor> PackedLSTMImpl::flat_weights() const {
   return flat;
 }
 
-torch::nn::RNNOutput PackedLSTMImpl::forward(const torch::Tensor& input,
+std::tuple<torch::Tensor, torch::Tensor> PackedLSTMImpl::forward(const torch::Tensor& input,
                                              const at::Tensor& lengths,
                                              torch::Tensor state) {
   if (!state.defined()) {
