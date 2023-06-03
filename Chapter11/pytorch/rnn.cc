@@ -99,7 +99,7 @@ torch::Tensor SentimentRNNImpl::forward(const at::Tensor& text,
   auto rnn_out = rnn_->forward(packed_text, packed_length);
   // rnn_out = {output, torch::stack({hidden_state, cell_state})}
 
-  auto hidden_state = rnn_out.state.narrow(0, 0, 1);
+  auto hidden_state = std::get<1>(rnn_out).narrow(0, 0, 1);
   hidden_state.squeeze_(0);  // remove 0 dimension equals to 1 after narrowing
 
   // take last hidden layers state
