@@ -7,7 +7,8 @@ PackedLSTMImpl::PackedLSTMImpl(const torch::nn::LSTMOptions& options) {
 
 std::vector<torch::Tensor> PackedLSTMImpl::flat_weights() const {
   // Organize all weights in a flat vector in the order
-  // (w_ih, w_hh, b_ih, b_hh), repeated for each layer (next to each other).
+  // (weight_ih_l0, weight_hh_l0, bias_ih_l0, bias_hh_l0)
+  // repeated for each layer (next to each other).
   std::vector<torch::Tensor> flat;
 
   const auto num_directions = rnn_->options.bidirectional() ? 2 : 1;
@@ -15,11 +16,11 @@ std::vector<torch::Tensor> PackedLSTMImpl::flat_weights() const {
     for (auto direction = 0; direction < num_directions; direction++) {
       const auto layer_idx =
           static_cast<size_t>((layer * num_directions) + direction);
-      flat.push_back(rnn_->w_ih[layer_idx]);
-      flat.push_back(rnn_->w_hh[layer_idx]);
+      flat.push_back(rnn_->named_parameters()["weight_ih_l0"][layer_idx]);
+      flat.push_back(rnn_->named_parameters()["weight_hh_l0"][layer_idx]);
       if (rnn_->options.bias()) {
-        flat.push_back(rnn_->b_ih[layer_idx]);
-        flat.push_back(rnn_->b_hh[layer_idx]);
+        flat.push_back(rnn_->named_parameters()["bias_ih_l0"][layer_idx]);
+        flat.push_back(rnn_->named_parameters()["bias_hh_l0"][layer_idx]);
       }
     }
   }

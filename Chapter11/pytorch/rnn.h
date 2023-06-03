@@ -1,7 +1,12 @@
 /*
-PR introduced breaking changes: https://github.com/pytorch/pytorch/pull/34322
-*/
+PR's that introduced breaking changes:
+  https://github.com/pytorch/pytorch/pull/34322
 
+W_ih = torch_rnn.weight_ih_l0.detach()
+b_ih = torch_rnn.bias_ih_l0.detach()
+W_hh = torch_rnn.weight_hh_l0.detach()
+b_hh = torch_rnn.bias_hh_l0.detach()
+*/
 #ifndef LENET5_H
 #define LENET5_H
 
