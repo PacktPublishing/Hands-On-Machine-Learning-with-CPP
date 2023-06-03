@@ -11,6 +11,7 @@ find_package(Torch REQUIRED)
 include_directories(${TORCH_INCLUDE_DIRS})
 include_directories(${Boost_INCLUDE_DIRS})
 
+set(CMAKE_CXX_FLAGS "-pthread")
 # set(CMAKE_CXX_FLAGS "-msse3 -fopenmp -Wall -Wextra -Wno-unused-parameter -pthread -fopenmp")
 # set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
 # set(CMAKE_CXX_FLAGS_DEBUG "-ggdb -O0")
