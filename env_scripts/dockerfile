@@ -1,5 +1,5 @@
 FROM ubuntu:18.04
-MAINTAINER Kirill rotate@ukr.net
+LABEL org.opencontainers.image.authors="Kirill rotate@ukr.net"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -37,6 +37,7 @@ RUN apt-get install -y libopencv-highgui3.2
 RUN apt-get install -y libopencv-highgui-dev
 RUN apt-get install -y libhdf5-dev
 RUN apt-get install -y libjson-c-dev
+RUN apt-get install -y libssl-dev
 RUN apt-get install -y libx11-dev
 RUN apt-get install -y openjdk-8-jdk
 RUN apt-get install -y wget

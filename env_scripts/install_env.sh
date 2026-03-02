@@ -32,7 +32,7 @@ mkdir libs/sources
 . ./install_lib.sh https://github.com/Tencent/rapidjson 73063f5002612c6bf64fe24f851cd5cc0d83eef9
 
 # mlpack
-. ./install_lib.sh https://github.com/mlpack/mlpack e2f696cfd5b7ccda2d3af1c7c728483ea6591718 -DBUILD_PYTHON_BINDINGS=OFF -DBUILD_TESTS=OFF -DDOWNLOAD_ENSMALLEN=ON
+. ./install_lib.sh https://github.com/mlpack/mlpack e2f696cfd5b7ccda2d3af1c7c728483ea6591718 -DBUILD_PYTHON_BINDINGS=OFF -DBUILD_TESTS=OFF -DENSMALLEN_INCLUDE_DIR="$DEV_DIR/libs/include"
 
 # Eigen
 . ./install_lib.sh https://github.com/eigenteam/eigen-git-mirror cf794d3b741a6278df169e58461f8529f43bce5d
